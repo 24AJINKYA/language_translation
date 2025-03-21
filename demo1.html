@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo1 </title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between button and text */
+            flex-wrap: wrap; /* Ensures content wraps properly instead of overflowing */
+            justify-content: center; /* Centers items in case of wrapping */
+            max-width: 100%; /* Prevents overflow */
+            padding-bottom: 10px; /* Ensures it stays above the footer */
+        }
+        html, body { 
+            height: 100%; 
+            overflow: hidden; /* Remove scrollbar */
+        }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: ced1d39c; 
+            text-align: center; 
+            padding-top: 150px; /* Adjusted for header and back button */
+            padding-bottom: 80px; /* Adjusted for footer */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .back-button {
+            position: fixed;
+            top: 100px; /* Adjusted to stay below the header dynamically */
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            background: #fefefe;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 1000;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #d3d3d3;
+            transform: scale(1.05);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .back-button {
+                top: 100px; /* Adjusted for mobile header size */
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .back-button {
+                top: 120px; /* Further adjusted for smaller screens */
+                left: 5px;
+                width: auto;
+                padding: 6px 12px;
+                font-size: 10px;
+            }
+        }
+        .selectbtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+            white-space: nowrap; /* Prevents button text from breaking */
+        }
+        
+        .selectbtn:hover {
+            background: #b5b3b3;
+            transform: scale(1.05);
+        }
+        
+        .language-indicator {
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            color: #000000; /* Blue text color */
+            white-space: nowrap; /* Prevents text wrapping */
+            margin-left: 10px; /* Space between button and text */
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: center; /* Center items on smaller screens */
+                gap: 5px;
+            }
+        
+            .language-indicator {
+                margin-left: 0; /* Remove left margin when stacked */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .language-indicator {
+                font-size: 14px; /* Smaller font for very small screens */
+            }
+        }
+        
+       
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="left-logos">
+                <img src="Logos\inai_logo.jpeg" alt="Logo 1" class="logo">
+                <img src="Logos\iiitLogo.png" alt="Logo 3" class="logo">
+                <img src="Logos\ihubLogoV.png" alt="Logo 2" class="logo">
+            </div>
+            <div class="title"> Demo 1</div>
+            
+        </div>
+    </header>
+<button class="back-button" onclick="goBack()"><b>Back to Home</b> </button>
+<div class="video-container">
+    <video id="videoPlayer" controls>
+        <source id="videoSource" src=" " type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="controls">
+        <button onclick="openMap()" class="selectbtn"><b>Select Language</b></button>
+       
+        <div id="languageIndicator" class="language-indicator">Original Video (English)</div>
+    </div>
+    
+</div> 
+
+<!-- Modal for the map -->
+<div class="modal" id="mapModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeMap()">&times;</span>
+        <iframe id="mapFrame" src="map.html" width="100%" height="100%" style="border: none;"></iframe>
+    </div>
+</div>
+<br>
+<br>
+
+<footer>&copy; <b>2025 All Rights Reserved</footer>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+let fullVideoPath = urlParams.get("video") ;
+let sourcePage = urlParams.get("source"); // Check if the source parameter exists
+
+// If the video is coming from index.html (based on URL parameter), use fullVideoPath directly
+let selectedVideo;
+if (sourcePage === "index") {
+    // If coming from index.html, use the full path directly
+    selectedVideo = fullVideoPath;
+} else {
+    // If selecting a new language, extract only the filename
+    selectedVideo = fullVideoPath.split('/').pop().split('\\').pop();
+}
+
+
+console.log("Selected Video:", selectedVideo); // Debugging to check if the logic is correct
+
+document.getElementById("videoSource").src = selectedVideo;
+document.getElementById("videoPlayer").load();
+
+    
+    function openMap() {
+        document.getElementById("mapModal").style.display = "block";
+    }
+    function closeMap() {
+        document.getElementById("mapModal").style.display = "none";
+    }
+    
+    window.addEventListener("message", function(event) {
+        if (event.data && event.data.language) {
+            let selectedLanguage = event.data.language.toLowerCase(); // Ensure lowercase for consistency
+            closeMap();
+            console.log("Received language:", selectedLanguage);
+            updateVideo(selectedLanguage);
+            closeMap();
+        }
+    }, false);
+    
+    let originalVideoPath = "videos/en1.mp4"; // Store the original video path
+
+function updateVideo(language) {
+    let videoMappings = {
+        "videos/en1.mp4": {
+            'assamese': "videos/output_demo1_asm.mp4",
+            'english': "videos/output_demo1_en.mp4",
+            'hindi': "videos/output_demo1_hi.mp4",
+            'marathi': "videos/output_demo1_mr.mp4",
+            'bengali': "videos/output_demo1_bn.mp4",
+            'tamil': "videos/output_demo1_ta.mp4",
+            'telugu': "videos/output_demo1_te.mp4",
+            'gujarati': "videos/output_demo1_gu.mp4",
+            'kannada': "videos/output_demo1_kn.mp4",
+            'malayalam': "videos/output_demo1_ml.mp4",
+            'punjabi': "videos/output_demo1_pa.mp4",
+            'oriya': "videos/output_demo1_or.mp4",
+            'manipuri': "videos/output_demo1_mni.mp4",
+        },
+    };
+
+  
+
+    if (videoMappings[selectedVideo] && videoMappings[selectedVideo][language]) {
+        let newVideo = videoMappings[selectedVideo][language];
+
+        document.getElementById("videoSource").src = newVideo;
+        document.getElementById("videoPlayer").load();
+        document.getElementById("languageIndicator").innerText = "Audio playing in: " + language.charAt(0).toUpperCase() + language.slice(1);
+
+        // Show "Play in Original" button when a different language is selected
+        if (language !== "english") {
+            originalButton.style.display = "inline-block";
+        } else {
+            originalButton.style.display = "none";
+        }
+    } else {
+        console.error("No mapping found for selected language:", language);
+    }
+}
+
+
+    
+
+    function goBack() {
+        window.location.href = "index.html"; // Navigate back to index.html
+    }
+</script>
+
+</body>
+</html>

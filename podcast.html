@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Safety Podcast</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between button and text */
+            flex-wrap: wrap; /* Ensures content wraps properly instead of overflowing */
+            justify-content: center; /* Centers items in case of wrapping */
+            max-width: 100%; /* Prevents overflow */
+            padding-bottom: 10px; /* Ensures it stays above the footer */
+        }
+        html, body { 
+            height: 100%; 
+            overflow: hidden; /* Remove scrollbar */
+        }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #ced1d3; 
+            text-align: center; 
+            padding-top: 150px; /* Adjusted for header and back button */
+            padding-bottom: 80px; /* Adjusted for footer */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .back-button {
+            position: fixed;
+            top: 100px; /* Adjusted to stay below the header dynamically */
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            background: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 1000;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .back-button:hover {
+            background: #cacbcb;
+            transform: scale(1.05);
+        }
+        .selectbtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+            white-space: nowrap; /* Prevents button text from breaking */
+        }
+        .selectbtn:hover {
+            background: #b5b3b3;
+            transform: scale(1.05);
+        }
+        .language-indicator {
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            color: #000000; /* Blue text color */
+            white-space: nowrap; /* Prevents text wrapping */
+            margin-left: 10px; /* Space between button and text */
+        }
+        .audio-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .thumbnail {
+            width: 100%;
+            max-width: 300px; /* Adjust the size of the thumbnail */
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background: #ffffff;
+            color: #000000;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: center; /* Center items on smaller screens */
+                gap: 5px;
+            }
+            .language-indicator {
+                font-size: 16px;
+                font-weight: bold;
+                padding-bottom: 10px;
+                color: #000000; /* Blue text color */
+                white-space: nowrap; /* Prevents text wrapping */
+                margin-left: 10px; /* Space between button and text */
+            }
+        }
+        @media (max-width: 480px) {
+            .language-indicator {
+                font-size: 14px; /* Smaller font for very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="left-logos">
+                <img src="Logos/inai_logo.jpeg" alt="Logo 1" class="logo">
+                <img src="Logos/iiitLogo.png" alt="Logo 3" class="logo">
+                <img src="Logos/ihubLogoV.png" alt="Logo 2" class="logo">
+            </div>
+            <div class="title">Road Safety Podcast</div>
+        </div>
+    </header>
+    <button class="back-button" onclick="goBack()"><b>Back to Home</b></button>
+   
+    <div class="audio-container">
+        <!-- Thumbnail Image -->
+        <img src="logos/thumb4.png" alt="Podcast Thumbnail" class="thumbnail">
+        
+        <!-- Audio Player -->
+        <audio id="audioPlayer" controls>
+            <source id="audioSource" src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <!-- Language Selection Controls -->
+        </div>
+        <br><div class="controls">
+            <button onclick="openMap()" class="selectbtn"><b>Select Language</b></button>
+            <div id="languageIndicator" class="language-indicator">Original Audio (English)</div>
+        </div>
+    
+
+    <!-- Modal for the map -->
+    <div class="modal" id="mapModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeMap()">&times;</span>
+            <iframe id="mapFrame" src="map.html" width="100%" height="100%" style="border: none;"></iframe>
+        </div>
+    </div>
+    <footer>&copy; <b>2025 All Rights Reserved</b></footer>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let fullAudioPath = urlParams.get("audio") || "audio/podcast.mp3"; // Relative path
+
+        // Set the audio source dynamically
+        document.getElementById("audioSource").src = fullAudioPath;
+        document.getElementById("audioPlayer").load();
+
+        function openMap() {
+            document.getElementById("mapModal").style.display = "block";
+        }
+
+        function closeMap() {
+            document.getElementById("mapModal").style.display = "none";
+        }
+
+        window.addEventListener("message", function(event) {
+            if (event.data && event.data.language) {
+                let selectedLanguage = event.data.language.toLowerCase(); // Ensure lowercase for consistency
+                closeMap();
+                console.log("Received language:", selectedLanguage);
+                updateAudio(selectedLanguage);
+            }
+        }, false);
+
+        function updateAudio(language) {
+            let audioMappings = {
+                "audio/podcast.mp3": {
+                    'assamese': "audio/podcast_as.mp3",
+                    'english': "audio/podcast.mp3",
+                    'hindi': "audio/podcast_hi.mp3",
+                    'marathi': "audio/podcast_mr.mp3",
+                    'bengali': "audio/podcast_bn.mp3",
+                    'tamil': "audio/podcast_ta.mp3",
+                    'telugu': "audio/podcast_te.mp3",
+                    'gujarati': "audio/podcast_gu.mp3",
+                    'kannada': "audio/podcast_kn.mp3",
+                    'malayalam': "audio/podcast_ml.mp3",
+                    'manipuri': "audio/podcast_mni.mp3",
+                    'punjabi': "audio/podcast_pa.mp3",
+                    'oriya': "audio/podcast_or.mp3"
+                }
+            };
+
+            if (audioMappings[fullAudioPath] && audioMappings[fullAudioPath][language]) {
+                let newAudio = audioMappings[fullAudioPath][language];
+                document.getElementById("audioSource").src = newAudio;
+                document.getElementById("audioPlayer").load();
+                document.getElementById("languageIndicator").innerText = "Audio playing in: " + language.charAt(0).toUpperCase() + language.slice(1);
+            } else {
+                console.error("No mapping found for selected language:", language);
+            }
+        }
+
+        function goBack() {
+            window.location.href = "index.html"; // Navigate back to index.html
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Translation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+     <header>
+        <div class="header-content">
+            <div class="left-logos">
+                <img src="Logos\inai_logo.jpeg" alt="Logo 1" class="logo">
+                
+                <img src="Logos\iiitLogo.png" alt="Logo 3" class="logo">
+                <img src="Logos\ihubLogoV.png" alt="Logo 2" class="logo">
+            </div>
+            <div class="title">Language Translation Demo</div>
+           
+        </div>
+    </header>
+    <div class="bhashini-info">
+        <p><strong></strong> In this demo we have taken a few videos on Road safety and we have implemented the playback of  videos in 10 Indian Languages.  <br> <br>
+            Click on each Demo and Choose the Language Option Provided.  <br><br>
+             For this demo we have used Bhashini API</p>
+    </div>
+    <div class="container">
+        <div class="video-card" onclick="openVideo1('videos/en1.mp4')">
+            <img src="logos/thumb1.png" alt="Video 1 Thumbnail" class="video-thumbnail">
+            <div class="video-title"> Demo 1</div>
+        </div>
+        <div class="video-card" onclick="openVideo2('videos/en2.mp4')">
+            <img src="logos/thumb2.png" alt="Video 2 Thumbnail" class="video-thumbnail">
+            <div class="video-title"> Demo 2</div>
+
+        </div>
+        <div class="video-card" onclick="openPodcast('audio/podcast.mp3')">
+            <img src="logos/thumb4.png" alt="Podcast Thumbnail" class="video-thumbnail">
+            <div class="video-title">Road Safety Podcast</div>
+        </div>
+    </div>
+ 
+    <footer>&copy; <b>2025 All Rights Reserved</footer>
+
+    <script>
+       
+
+        function openVideo1(videoPath) {
+            window.location.href = `demo1.html?video=${videoPath}&source=index`;
+        }
+        
+        function openVideo2(videoPath) {
+            window.location.href = `demo2.html?video=${videoPath}&source=index`;
+        }
+        function openPodcast(audioPath) {
+            window.location.href = `podcast.html?audio=${audioPath}`;
+        }
+            // Get the query parameters from the URL
+     
+      // Set the audio source dynamically
+    
+            </script>
+</body>
+</html>

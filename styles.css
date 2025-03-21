@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #ced1d39c;
+    color: #02030a;
+    text-align: center;
+    padding-top: 120px; /* Increased padding to account for the taller header */
+    padding-bottom: 80px; /* Increased padding to account for the fixed footer */
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff ;
+    color: rgb(3, 3, 34);
+    padding: 10px 20px; /* Adjusted padding for better spacing */
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    min-height: 80px; /* Minimum height for the header */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px; 
+    /* Added gap for better spacing */
+}
+
+.left-logos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0; /* Prevent logos from shrinking */
+}
+
+.right-logo {
+    display: flex;
+    align-items: left;
+    gap: 10px;
+    padding-left: 50px;
+    flex-shrink: 0; /* Prevent logos from shrinking */
+}
+
+.logo {
+    height: 40px; /* Adjusted logo size for better fit */
+    width: auto;
+    max-width: 100%; /* Ensure logos don't overflow */
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap; /* Keep title in a single line */
+    margin: 0 10px; /* Reduced margin for better spacing */
+    font-size: 25px; 
+    padding-right: 150px;/* Adjusted font size for better fit */
+}
+
+.bhashini-info {
+    width: 100%;
+    max-width: 1100px; /* Added max-width for better readability */
+    background: #ffffff ;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    margin: 20px auto;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    flex-wrap: wrap;
+}
+.video-card {
+    width: 300px;
+    background: #ffffff ;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.video-card:hover {
+    transform: scale(1.05);
+}
+.video-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.video-title {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+footer {
+    background: #ffffff ;
+    color: rgb(3, 3, 34);
+    padding: 15px;
+    position: fixed; /* Make footer stick to the bottom */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+    height: 60px; /* Fixed height for the footer */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding-top: 160px; /* Increased padding for taller header */
+    }
+    header {
+        min-height: 140px; /* Increased header height for smaller screens */
+        padding: 10px; /* Reduced padding for smaller screens */
+    }
+    .header-content {
+        flex-direction: column; /* Stack logos and title vertically */
+        align-items: flex-start; /* Align items to the left */
+        gap: 10px; /* Added gap for better spacing */
+    }
+    .left-logos {
+        flex-direction: column; /* Stack logos vertically */
+        align-items: flex-start; /* Align logos to the left */
+        gap: 5px; /* Reduced gap for smaller screens */
+    }
+    .title {
+        text-align: left; /* Align title to the left */
+        margin: 0; /* Remove margin for better alignment */
+        font-size: 18px; /* Adjusted font size for smaller screens */
+        white-space: normal; /* Allow title to wrap into multiple lines */
+    }
+    .logo {
+        height: 35px; /* Adjusted logo size for smaller screens */
+    }
+    .bhashini-info {
+        width: 95%;
+        font-size: 13px; /* Adjusted font size for smaller screens */
+        padding: 15px;
+    }
+    .container {
+        padding: 20px;
+    }
+    .video-card {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 180px; /* Adjusted padding for very small screens */
+    }
+    header {
+        min-height: 160px; /* Further increased header height for very small screens */
+    }
+    .title {
+        font-size: 16px; /* Adjusted font size for very small screens */
+    }
+    .logo {
+        height: 30px; /* Further adjusted logo size for very small screens */
+    }
+    .bhashini-info {
+        width: 100%;
+        font-size: 12px; /* Adjusted font size for very small screens */
+        padding: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.back-button {
+    position: fixed;
+    top: 90px; /* Below the header */
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 10px;
+    background: #1565c0;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1000;
+}
+.back-button:hover {
+    background: #0d47a1;
+}
+
+.video-container { 
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+video { 
+    width: 100%; 
+    max-width: 800px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+}
+.controls { 
+    margin-top: 15px; 
+}
+button { 
+    padding: 10px; 
+    font-size: 16px; 
+    background: #1565c0; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+}
+.modal { 
+    display: none; 
+    position: fixed; 
+    top: 70px; /* Below the header */
+    right: 20px; /* Positioned in the top-right corner */
+    width: 400px; /* Adjust width as needed */
+    height: 400px; /* Adjust height as needed */
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+.modal-content { 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.close { 
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+    cursor: pointer; 
+    font-size: 24px; 
+    color: #1565c0;
+}
+.language-indicator { 
+    margin-top: 15px; 
+    font-size: 18px; 
+    font-weight: bold; 
+    color: #1565c0; 
+}
